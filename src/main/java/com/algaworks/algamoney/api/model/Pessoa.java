@@ -8,7 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pessoa")
@@ -32,6 +35,12 @@ public class Pessoa {
 		return Objects.hash(codigo);
 	}
 	
+	@JsonIgnore
+	@Transient
+	public boolean isInativo() {
+		return !this.ativo;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -43,6 +52,7 @@ public class Pessoa {
 		Pessoa other = (Pessoa) obj;
 		return Objects.equals(codigo, other.codigo);
 	}
+	
 	public Long getCodigo() {
 		return codigo;
 	}
